@@ -141,32 +141,32 @@
                 console.log('Email:', email);
                 console.log('File ZIP:', file.name, file.type, file.size, 'bytes');
 
-                // QUI VA LA LOGICA PER ALLEGARE IL FILE ZIP O INVIARE IL LINK
-                // Questo richiederà l'uso delle API di Office.js per interagire con l'elemento di posta
-                // e potenzialmente una chiamata a un servizio backend per caricare il file su SharePoint
-                // e generare il link.
+                // *** NUOVA LOGICA: Imposta l'email del destinatario nel messaggio di Outlook ***
+                if (Office.context.mailbox.item) {
+                    const recipients = [{
+                        displayName: email, // Puoi usare l'email come display name o cercare il nome utente
+                        emailAddress: email
+                    }];
 
-                // Esempio di come potresti voler interagire con l'elemento di posta (richiede Office.js)
-                // Questo è solo un esempio concettuale, la logica effettiva dipenderà dal tuo backend
-                /*
-                Office.context.mailbox.item.body.setSelectedDataAsync(
-                    "Contenuto da inserire nel corpo del messaggio (es. link al file ZIP)",
-                    { coercionType: Office.CoercionType.Html },
-                    function (asyncResult) {
+                    Office.context.mailbox.item.to.setAsync(recipients, function(asyncResult) {
                         if (asyncResult.status === Office.AsyncResultStatus.Succeeded) {
-                            console.log("Testo inserito con successo!");
-                            // Potresti voler chiudere il task pane qui
-                            // Office.context.ui.closeContainer();
+                            console.log("Email destinatario impostata con successo in Outlook.");
+                            // Continua con la logica successiva (caricamento file, ecc.)
+                            // Per ora, mostriamo l'alert di successo
+                            alert('Form inviato! Email impostata in Outlook. (Logica di invio file da implementare)');
                         } else {
-                            console.error("Errore nell'inserimento del testo:", asyncResult.error.message);
+                            console.error("Errore nell'impostazione dell'email destinatario:", asyncResult.error.message);
+                            alert("Errore nell'impostazione dell'email destinatario: " + asyncResult.error.message);
                         }
-                    }
-                );
-                */
+                    });
+                } else {
+                    console.warn("Office.context.mailbox.item non disponibile. Non è possibile impostare il destinatario.");
+                    alert('Form inviato! (Logica di invio file da implementare)');
+                }
+                // *** FINE NUOVA LOGICA ***
 
-                alert('Form inviato! (Logica di invio da implementare)');
             } else {
-                alert('Per favor, compila tutti i campi.');
+                alert('Per favore, compila tutti i campi.');
             }
         });
     </script>
