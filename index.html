@@ -45,6 +45,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             background-color: #fff;
+            position: relative; /* AGGIUNGI QUESTA LINEA */
         }
         .file-input-wrapper input[type="file"] {
             flex-grow: 1;
@@ -55,6 +56,8 @@
             width: 100%;
             height: 100%;
             cursor: pointer;
+            top: 0; /* AGGIUNGI QUESTA LINEA */
+            left: 0; /* AGGIUNGI QUESTA LINEA */
         }
         .file-input-wrapper .file-button {
             background-color: #e0e0e0;
@@ -163,7 +166,7 @@
 
                 alert('Form inviato! (Logica di invio da implementare)');
             } else {
-                alert('Per favore, compila tutti i campi.');
+                alert('Per favor, compila tutti i campi.');
             }
         });
     </script>
